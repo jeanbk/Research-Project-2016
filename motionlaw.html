@@ -1,0 +1,720 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Simulation</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/normalize.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/styles.css">
+	
+
+  <!--JQUERY -->
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+
+  <!--questions -->
+  <script type="text/javascript" src="js/questions.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/questions.css">
+  <!---->
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div class="header-container">
+      <header class="wrapper clearfix">
+        <h1 class="title">Newton's 2nd Law of Motion : F = ma</h1>
+        <nav>
+          <ul>
+
+            <li><a href="glossary.html">Glossary</a></li>
+            <li><a href="motionlaw.html">Simulation</a></li>
+            <li><a href="index.html">Home</a></li>
+
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+    <div class="main-container">
+
+      <!-- <div class="main wrapper clearfix"> -->
+
+      <article>
+        
+
+        <div id="formula"> 
+<!--								a  (ms2) = F (N) / m (Kg)-->
+			 <div class="tooltip"> a  <span class="tooltiptext">Acceleration (Meter * Second<sup>2</sup> )</span></div> 
+			= <div class="tooltip"> F <span class="tooltiptext">Force (in newtons)</span></div> 
+			/ <div class="tooltip"> m <span class="tooltiptext">Mass (in kilograms)</span></div>	
+		</div>
+							
+	    <span id="quesPopUp" > 
+		   <input type="image" id="opener" src="img/ques-img4.png" alt="Question Mark" style="width:35px;height:35px;"> 
+		</span>
+							
+		<div id="dialog" > <!-- title="Basic dialog" -->
+  			<img id="gifFormula" src="img/deriveExample.gif" alt="GIF Formula" style="width:230px;height:168px;" >
+	    </div>
+
+        <div id=quizbutton>
+        <a href="#" onClick="switchQuizMode(event, true);" class="flat-button">Quiz</a>
+        <a href="#" onClick="switchQuizMode(event, false);" class="flat-button">Graph</a>
+        </div>
+        <br>
+
+        
+          <!-- Accelaration -->
+          <section id="content2">
+            <div name = "resetdropdown">
+              <svg height="20" width="20">
+                <circle cx="10" cy="10" r="5" stroke="red" stroke-width="3" fill="red" />
+              </svg>
+              Red car : a <input type="text" size="5" id="textField2" class="colored" disabled> = F
+              <input type="text" name="answer1" size="7" id="forceForAcc1" value="1000"> / m
+              <select id="mySelect1" onchange="setMass1()">
+                                                <option value="1000">1000</option>
+                                                <option value="2000">2000</option>
+                                                <option value="3000">3000</option>
+                                                <option value="4000">4000</option>
+                                                <option value="5000">5000</option>
+                                                <option value="6000">6000</option>
+                                               
+                                              </select> <br>
+
+              <svg height="20" width="20">
+                <circle cx="10" cy="10" r="5" stroke="green" stroke-width="3" fill="green" />
+              </svg>
+              Green car : a <input type="text" size="5" id="textField3" disabled> = F
+              <input type="text" name="answer1" size="7" id="forceForAcc2" value="1000"> / m
+              <select id="mySelect2" onchange="setMass2()">
+                                               <option value="1000">1000</option>
+                                                <option value="2000">2000</option>
+                                                <option value="3000">3000</option>
+                                                <option value="4000">4000</option>
+                                                <option value="5000">5000</option>
+                                                <option value="6000">6000</option>
+                                                
+                                              </select>
+
+              <button onclick="startForAcc()" class="colored" id="startForAcc">GO!</button>
+              <!--<input type="button" id="startForAcc" value="GO!" onclick="startForAcc()" />-->
+
+              <button onclick="reset()" class="colored" id="rset">Reset</button>
+            </div>
+          </section>
+
+
+        <div id="graph" >
+          <section id="canvases" style="position:relative; width:580px; height:250px; margin-right:80px; ">
+            <div id="quiz" style="display:none;">
+            <div id="question_div"></div>
+            <div id="nav-div">
+              <button id="prevBtn" onClick="changeQuestion(true)" >Previous</button>
+              <button id="nextBtn" onClick="changeQuestion()" >Next</button>
+            </div>
+        </div>
+        
+         <div id="yaxis" >
+                <canvas id="graphCanvas3" style="z-index: 1;
+                                    background:#fff;
+                                    position:absolute;
+                                    left:0px;
+                                    top:0px;
+                                    " height="250px" width="100">
+                    This text is displayed if your browser does not support HTML5 Canvas.
+                  </canvas>       
+         </div>
+          
+         <div id="canvasesdiv" style=" position:relative; width:620px; height:260px; float:right; margin-top:-250px; margin-right:-100px;">
+          <canvas id="graphCanvas1" style="z-index: 1;
+                            background:#F0F0F0;
+                            position:absolute;
+                            left:0px;
+                            top:0px;
+                            " height="250px" width="580">
+            This text is displayed if your browser does not support HTML5 Canvas.
+          </canvas>
+          <canvas id="graphCanvas2" style="z-index: 2;
+                            position:absolute;
+                            left:0px;
+                            top:0px;
+                            " height="250px" width="580">
+            This text is displayed if your browser does not support HTML5 Canvas.
+          </canvas>
+        </div>
+
+     </section>
+      </div>
+     
+        <div style="text-align: center;">
+
+          <h3 style="text-align: center;">Results</h3>
+          <form name="d">
+           &nbsp;&nbsp; <b>Red car: </b> Travelled <i>
+                                <span id="distance1">0</span></i> meters in
+            <input type="text" id="timerText1" size="8" name="d2a" disabled> seconds<br/>
+
+            <b>Green car: </b> Travelled <i><span id="distance2">0</span></i> meters in <input type="text" id="timerText2"
+              size="8" name="d2b" disabled> seconds
+
+
+          </form>
+        </div >
+        
+
+        
+        <div id="xaxis">
+        <canvas id="graphCanvas4" style="z-index: 1;
+                        position:absolute;
+                        left:0px;
+                        top:0px;
+                        " height="80px" width="580">
+        This text is displayed if your browser does not support HTML5 Canvas.
+          </canvas>
+
+          
+        </div>
+        
+
+        <section>
+          
+          <div id="racetrack">
+
+            <canvas id="myCanvas" width="1280" height="330" style="border:0px solid #d3d3d3">
+            </canvas>
+
+          </div>
+           <div>
+             
+            <canvas id="trackscale" width="1280" height="40" style="border:0px solid black;">
+            </canvas>
+
+          </div>
+        </section>
+        </section>
+
+        <footer>
+        </footer>
+      </article>
+
+
+    </div>
+    <!-- #main-container-->
+
+    <div class="footer-container">
+      <footer class="wrapper">
+        <h3> © 2016 Summer Research Team.</h3>
+      </footer>
+    </div>
+
+  </div>
+
+
+
+  <script>
+      
+	  
+	  
+      var animating = false;
+      //this will shrink the track by dividing 1200 into x
+      var shrinkTrack = 120
+      var x = [0, 0];  //car position on x axy
+      var y = [30, 180]; //car position on y
+      var rad = [1000, 1000]; //ball size 
+      var color = ["red", "green"];
+      var velX = [0, 0];
+      var velY = [0, 0 ];
+      //var accX = [1, .5, .25];
+      //var accY = [0, 0, 0];
+      var accX = [1, 1];
+      var accY = [0, 0];
+      var canvas;
+      var ctx;
+      var startingPositions = [0, 0];
+      var timeMillisecond = 0;
+      setInterval(update, 25);
+      
+      //alert( "Hello!")
+      
+      window.addEventListener('resize', resizeCanvas, false);
+      window.addEventListener('orientationchange', resizeCanvas, false);
+    
+      var canvas = document.getElementById("myCanvas");
+      var graphCanvas1 = document.getElementById("graphCanvas1");
+      var graphCanvas2 = document.getElementById("graphCanvas2");
+      var trackScale = document.getElementById("trackscale");
+
+      ctx = canvas.getContext("2d");
+
+      /* START OF TIMER */ 
+      var millisec = 0;
+      var seconds = 0;
+      var timer;
+      var canvasWidth;
+
+      var maxTime = 1000;
+      drawScaleY();
+      drawScaleX();
+
+      drawTrackScale();
+      function switchQuizMode(e, showQuiz) {
+        e.preventDefault();
+        if (showQuiz) {
+          document.getElementById("quiz").style.display = ""
+          document.getElementById("xaxis").style.display = "none"
+          document.getElementById("yaxis").style.display = "none"
+          document.getElementById("canvasesdiv").style.display = "none"
+        } else {
+          document.getElementById("xaxis").style.display = ""
+          document.getElementById("yaxis").style.display = ""
+          document.getElementById("canvasesdiv").style.display = ""
+          document.getElementById("quiz").style.display = "none"
+        }
+        
+      }
+      function myFunction7() {
+        var x = document.getElementById("mySelect").selectedIndex;
+        alert(document.getElementsByTagName("option")[x].value);
+      } 
+
+
+      // reset the race and the graph
+      function reset() {
+        animating = false;
+
+
+
+        //reset drop down
+        
+        var dropDown1 = document.getElementById("mySelect1");
+        dropDown1.selectedIndex = 1000;
+        document.getElementById("mySelect1").value = "1000";
+        document.getElementById("textField2").value = "";
+       
+
+        var dropDown2 = document.getElementById("mySelect2");
+        dropDown2.selectedIndex = 1000;
+        document.getElementById("mySelect2").value = "1000";
+        document.getElementById("textField3").value = "";
+        
+        
+        
+        
+    
+        //reset timer
+        millisec = 0
+        seconds = 0
+        document.getElementById("distance1").innerHTML = "0"
+        document.d.d2a.value =""
+        document.getElementById("distance2").innerHTML = "0"
+        document.d.d2b.value = ""
+        stoptimer();
+
+
+
+
+        //reset graph
+
+        ctxCanvasY = graphCanvas1.getContext("2d");
+        ctxCanvasY.clearRect(0, 0, graphCanvas1.width, graphCanvas1.height);
+        ctxCanvasY.closePath();
+        ctxCanvasY.beginPath();
+
+        ctxCanvasX = graphCanvas2.getContext("2d");
+        ctxCanvasX.clearRect(0, 0, graphCanvas2.width, graphCanvas2.height);
+        ctxCanvasX.closePath();
+        ctxCanvasX.beginPath();
+
+
+        maxTime = 1000;
+        drawScaleY();
+        drawScaleX();
+
+
+        shrinkTrack = 120
+        x = [0, 0];  
+        rad = [1000, 1000]; 
+        velX = [0, 0];        
+        accX = [1, 1];
+        startingPositions = [0, 0];
+        timeMillisecond = 0;
+       
+
+
+
+          
+      }
+
+      function setMass1(){
+          var mass = document.getElementById("mySelect1").selectedIndex;
+          mass = document.getElementsByTagName("option")[mass].value;
+          rad[0] = mass;
+      }
+
+      function setMass2() {
+          var mass = document.getElementById("mySelect2").selectedIndex;
+          mass = document.getElementsByTagName("option")[mass].value;
+        rad[1] = mass;
+      }
+
+      function findTime(x,a) {
+        //deriving formula from x = x0 + v0t + ½at2
+        //t = square root (2(XF - x) / a ) 
+        return Math.sqrt((2 * (canvas.width/shrinkTrack - x)) / a) * 1000;
+      }
+
+       function drawTrackScale() {
+        ctxTrack = trackscale.getContext("2d");
+        ctxTrack.clearRect(0, 0, ctxTrack.width, ctxTrack.height);
+        
+
+        ctxTrack.font = "10px Arial";
+
+        //ctxTrack.fillText(x + "ms",0,20);
+        var diff = Math.floor((canvas.width/shrinkTrack)/10)
+        var round = Math.pow(10, diff.toString().length-1)
+        diff = Math.ceil(diff/round) * round
+        //alert(diff)
+        var x = 0
+
+        while (x < canvas.width/shrinkTrack) {
+
+          var xPos = x * shrinkTrack
+
+          
+          ctxTrack.beginPath();
+          ctxTrack.moveTo(xPos, 0);
+          ctxTrack.lineTo(xPos, 10);
+          ctxTrack.stroke();
+          ctxTrack.closePath();
+          if (xPos == 0) {
+            ctxTrack.fillText(x + "m",xPos, 25);
+          } else {
+            ctxTrack.fillText(x + "m",xPos - 5, 25);
+          }
+          x += diff
+        }
+      }
+
+
+      function drawScaleX() {
+        var canvasX = document.getElementById("graphCanvas4");
+        ctxCanvasX = canvasX.getContext("2d");
+        ctxCanvasX.clearRect(0, 0, canvasX.width, canvasX.height);
+        
+        ctxCanvasX.font = "bold 10px Arial";
+        ctxCanvasX.fillText("TIME",canvasX.width/2 - 20, 30);
+
+       
+        ctxCanvasX.font = "10px Arial";
+        var diff = Math.floor(maxTime/10)
+        var round = Math.pow(10, diff.toString().length-1)
+        diff = Math.ceil(diff/round) * round
+        var x = 0
+        while (x < maxTime - 10) {
+          xPos = x/(maxTime/graphCanvas1.width)
+
+          ctxCanvasX.beginPath();
+          ctxCanvasX.moveTo(xPos, 0);
+          ctxCanvasX.lineTo(xPos, 10);
+          ctxCanvasX.stroke();
+          ctxCanvasX.closePath();
+          if (xPos == 0) {
+            ctxCanvasX.fillText(x + "ms",xPos, 20);
+          } else {
+            ctxCanvasX.fillText(x + "ms",xPos-8,20);
+          }
+          x += diff
+        }
+      }
+
+      function drawScaleY() {
+        var canvasY = document.getElementById("graphCanvas3");
+        ctxCanvasY = canvasY.getContext("2d");
+        ctxCanvasY.clearRect(0, 0, canvasY.width, canvasY.height);
+
+        //create label
+        ctxCanvasY.font = "bold 10px Arial";
+        ctxCanvasY.fillText("D",0,125);
+        ctxCanvasY.fillText("I",2,135);
+        ctxCanvasY.fillText("S",0,145);
+        ctxCanvasY.fillText("T",0,155);
+        ctxCanvasY.fillText("A",0,165);
+        ctxCanvasY.fillText("N",0,175);
+        ctxCanvasY.fillText("C",0,185);
+        ctxCanvasY.fillText("E",0,195);
+
+        ctxCanvasY.font = "10px Arial";
+        var diff = Math.floor(canvas.width/(shrinkTrack * 10))
+        var round = Math.pow(10, diff.toString().length-1)
+        diff = Math.ceil(diff/round) * round
+        var y = 0
+        while (y < canvas.width/shrinkTrack) {
+          yPos = y/(canvas.width/shrinkTrack/graphCanvas1.height)
+          ctxCanvasY.beginPath();
+          ctxCanvasY.moveTo(canvasY.width-68, graphCanvas1.height - yPos);
+          ctxCanvasY.lineTo(canvasY.width, graphCanvas1.height - yPos);
+          ctxCanvasY.stroke();
+          ctxCanvasY.closePath();
+
+          if (yPos == 0) {
+            ctxCanvasY.fillText(y + "m",10 , graphCanvas1.height - yPos);
+          } else {
+            ctxCanvasY.fillText(y + "m",10, graphCanvas1.height - yPos + 4);
+          }
+          y += diff
+        }
+
+      }
+
+      function  startForAcc() {
+        var force = document.getElementById("forceForAcc1").value; 
+        var mass = document.getElementById("mySelect1").selectedIndex;
+        mass = document.getElementsByTagName("option")[mass].value;
+
+        var acc = force / mass;
+
+        document.getElementById("textField2").value = acc;
+
+        start();
+
+        accX[0] = acc;
+
+        var force1 = document.getElementById("forceForAcc2").value; 
+        var mass1 = document.getElementById("mySelect2").selectedIndex;
+        mass1 = document.getElementsByTagName("option")[mass1].value;
+
+        var acc1 = force1 / mass1;
+
+        document.getElementById("textField3").value = acc1;
+
+        accX[1] = acc1;
+
+        rad[0] = mass ;
+        rad[1] = mass1 ;
+
+        //findTime(x[0], accX[0])
+        var t1 = findTime(startingPositions[0], accX[0])
+        var t2 = findTime(startingPositions[1], accX[1])
+        
+       
+        if (t1 == Infinity) {
+          t1 = 0
+        }
+        if (t2 == Infinity) {
+          t2 = 0
+        }
+
+        maxTime = t1
+        if (t2 > t1) {
+            maxTime = t2
+        } 
+        if (maxTime == 0) {
+          maxTime = 1000
+        }
+        
+        /*create graph*/
+        drawScaleX();
+        
+        start();
+  
+        while (animating) {  
+          if (timer > 0) {
+          return;
+          }
+          display();
+        }
+      }
+               
+      function  start() {
+        animating = true;    
+      }
+
+      function update() {
+
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        for( i=0; i<x.length; i++ )
+        {
+          draw( ctx, x[i] * shrinkTrack  , y[i], rad[i], color[i]);
+        }
+        
+        if( animating == false ) return;
+        
+        for( i=0; i < x.length; i++ ) {
+          var t = timeMillisecond/1000
+          //x = x0 + v0t + ½at2
+          x[i] = startingPositions[i]  + (0.5 * accX[i] * Math.pow(t,2))
+        }
+
+        if (timeMillisecond < maxTime) {
+          var ctxGraph1 = graphCanvas1.getContext("2d");
+          var ctxGraph2 = graphCanvas2.getContext("2d");
+
+          //what ever is larger
+          //red car
+          var gx = timeMillisecond/(maxTime/graphCanvas1.width)//1.25
+          var gy1 = (x[0] * shrinkTrack ) /(canvas.width/graphCanvas1.height)
+          
+          //greencar
+          
+          var gy2 = (x[1] * shrinkTrack )/(canvas.width/graphCanvas1.height)
+
+          ctxGraph1.lineTo(gx, graphCanvas1.height - gy1);
+          ctxGraph1.strokeStyle = '#ff0000';
+          ctxGraph1.stroke();
+
+          ctxGraph2.lineTo(gx, graphCanvas1.height - gy2);
+          ctxGraph2.strokeStyle = 'green';
+                   
+          ctxGraph2.setLineDash([10,8]);
+          ctxGraph2.stroke();
+        }
+          if (animating){
+          timeMillisecond += 25
+        }   
+      }
+
+      function draw(context, x, y, radius, color) {
+            
+            base_image = new Image();
+            
+            if (radius == "1000") {
+
+	              if (color == "green") {	
+	              base_image.src = 'img/greenLambo20.png';
+	              } else {
+                  base_image.src = 'img/lambo20.png';
+                }
+
+
+            } else if (radius == "2000") {
+
+            	if (color == "green") {	
+	              base_image.src = 'img/greenCar30.png';
+	              } else {
+                  base_image.src = 'img/redCar30.png';
+                }
+
+            } else if (radius == "3000") {
+
+            	if (color == "green") {	
+	              base_image.src = 'img/greenCar40.png';
+	              } else {
+                  base_image.src = 'img/redCar40.png';
+                }
+
+            }else if (radius == "4000") {
+
+            	if (color == "green") {	
+	              base_image.src = 'img/greenMinivan50.png';
+	              } else {
+                  base_image.src = 'img/minivan50.png';
+                }
+
+            }else if (radius == "5000") {
+
+            	if (color == "green") {	
+	              base_image.src = 'img/greenMinibus60.png';
+	              } else {
+                  base_image.src = 'img/minibus60.png';
+                }
+
+            }else if (radius == "6000") {
+
+            	if (color == "green") {	
+	              base_image.src = 'img/greenTruck70.png';
+	              } else {
+                  base_image.src = 'img/truck70.png';
+                }
+
+            }
+
+
+            context.drawImage(base_image, x, y);
+
+      }
+
+      function display() {
+
+            if (millisec >= 9){
+            millisec=0
+            seconds+=1
+            } else {
+            millisec+=1 
+            }
+
+            var cont = false
+            if (x[0] <= canvas.width/shrinkTrack ) {
+              document.d.d2a.value = seconds + "." + millisec;
+              document.getElementById("distance1").innerHTML = Math.round(x[0] * 100) / 100
+              cont = true          
+            } 
+
+            if (x[1] <= canvas.width/shrinkTrack ) {
+              document.d.d2b.value = seconds + "." + millisec;
+              document.getElementById("distance2").innerHTML =  Math.round(x[1] * 100) / 100
+              cont = true
+            } 
+
+            if (cont) {
+              timer = setTimeout("display()",100);
+            }
+
+      }
+
+      function stoptimer() {
+        clearTimeout(timer);
+        timer = 0;
+      }
+
+      
+       
+      function init() {
+        canvas = document.getElementById('myCanvas');
+        if (canvas.getContext) {
+          ctx = canvas.getContext("2d");
+          window.addEventListener('resize', resizeCanvas, false);
+          window.addEventListener('orientationchange', resizeCanvas, false);
+          resizeCanvas();
+        }
+      }
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }      
+
+  </script>
+
+  
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+  <script src="js/main.js"></script>
+
+
+</body>
+
+</html>
